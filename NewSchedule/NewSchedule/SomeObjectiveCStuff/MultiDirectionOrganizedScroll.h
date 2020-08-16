@@ -10,11 +10,39 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MultiDirectionOrganizedScroll : UIScrollView
+#pragma mark - Protocols
 
+@class CurriculumPare;
+
+@protocol MultiDirectionOrganizedScrollDelegate <NSObject>
+
+@required
+- (NSInteger)countOfPages;
+- (NSArray<NSArray<CurriculumPare *> *> *)content;
+- (UIEdgeInsets)edge;
+
+@end
+
+
+#pragma mark - Enum
+
+typedef NS_ENUM(NSInteger, MultiDirectionOrganizedScrollStyle) {
+    MultiDirectionOrganizedScrollStyleDefault,
+    MultiDirectionOrganizedScrollStyleGrayLine
+};
+
+
+#pragma mark - Class
+
+/****************    Multi Direction Organized Scroll        ****************/
+
+@interface MultiDirectionOrganizedScroll : UIScrollView <UIScrollViewDelegate>
+
+@property (nonatomic, weak) id<MultiDirectionOrganizedScrollDelegate> multiDelegate;    // Delegate should be set in the viewDidLayoutSubviews or some method which include valid layout
+@property (nonatomic, assign, getter=isPageControlActive) BOOL pageControlActive;
 @property (nonatomic, strong) UIColor *color;
 
-- (instancetype)initWithCountOfPages:(NSInteger)count andFrame:(CGRect)rect;
+- (instancetype)initWithCountOfPages:(NSInteger)count withFrame:(CGRect)rect andStyle:(MultiDirectionOrganizedScrollStyle)style;
 
 @end
 

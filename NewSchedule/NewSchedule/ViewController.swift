@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     
     
     
-    var current: CurriculumWeek = [[("Ebat", "", "", "", "")]]
+    var current: CurriculumWeek = [[CurriculumPare()]]
     var multiScroll: MultiDirectionOrganizedScroll!
     
     var fullCurriculum: CurriculumBothWeeks?
@@ -21,15 +21,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         multiScroll = MultiDirectionOrganizedScroll(countOfPages: 6,
-                                                    andFrame: CGRect(x: view.center.x,
+                                                    withFrame: CGRect(x: view.center.x,
                                                                      y: view.center.y,
                                                                      width: 100,
-                                                                     height: 100))
-        multiScroll.translatesAutoresizingMaskIntoConstraints = false
-        multiScroll.backgroundColor = .red
-        view.addSubview(multiScroll)
+                                                                     height: 100),
+                                                    andStyle: .default)
         
+        multiScroll.translatesAutoresizingMaskIntoConstraints = false
+        multiScroll.backgroundColor = .lightGray
+        view.addSubview(multiScroll)
         
 //        let queue = DispatchQueue(label: "vanjo_gueue")
 //        queue.async {
@@ -53,6 +55,8 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
+        self.multiScroll.multiDelegate = self
+        
         setupLayout()
     }
     
@@ -63,7 +67,7 @@ class ViewController: UIViewController {
             multiScroll.topAnchor.constraint(equalTo: margins.topAnchor),
             multiScroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             multiScroll.rightAnchor.constraint(equalTo: view.rightAnchor),
-            multiScroll.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -SizeEntity.kBottomConstraint)
+            multiScroll.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -SizeEntity.kBottomConstraint)
         ])
     }
 }

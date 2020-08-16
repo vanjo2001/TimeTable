@@ -8,7 +8,7 @@
 import UIKit
 
 
-typealias CurriculumPare = (pairName: String, teacher: String, room: String, group: String, numberPare: String)?
+//typealias CurriculumPare = (pairName: String, teacher: String, room: String, group: String, numberPare: String)?
 typealias CurriculumDay = [CurriculumPare]
 typealias CurriculumWeek = [CurriculumDay]
 typealias CurriculumBothWeeks = (currentWeek: CurriculumWeek, nextWeek: CurriculumWeek)
@@ -21,7 +21,7 @@ fileprivate class DayFilling {
     
     init() {
         for _ in 1...7 {
-            let el:CurriculumPare = ("", "", "", "", "")
+            let el:CurriculumPare = CurriculumPare()
             pairAtNumber.append(el)
         }
     }
@@ -111,22 +111,22 @@ class RequestKBP {
                     for dayString in dayCarricullum {
                         
                         var copy = dayString
-                        var el: CurriculumPare = ("", "", "", "", "")
-                        el?.room = copy.replacingOccurrences(of: #"^\s+\w+\d*\w*\s+(\s*\w+\s+.{2,5}){1,2}\s+\w-\d+\s+"#, with:"" , options : .regularExpression)
+                        var el: CurriculumPare = CurriculumPare()
+                        el.room = copy.replacingOccurrences(of: #"^\s+\w+\d*\w*\s+(\s*\w+\s+.{2,5}){1,2}\s+\w-\d+\s+"#, with:"" , options : .regularExpression)
                                        .replacingOccurrences(of: #"\s+"#, with:"" , options : .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
-                        copy = copy.replacingOccurrences(of: el!.room, with:"" , options : .regularExpression)
+                        copy = copy.replacingOccurrences(of: el.room, with:"" , options : .regularExpression)
                         
-                        el?.group = copy.replacingOccurrences(of: #"^\s+\w+\d*\w*\s+(\s*\w+\s+.{2,5}){1,2}"#, with:"" , options : .regularExpression)
+                        el.group = copy.replacingOccurrences(of: #"^\s+\w+\d*\w*\s+(\s*\w+\s+.{2,5}){1,2}"#, with:"" , options : .regularExpression)
                             .replacingOccurrences(of: #"\s+"#, with:"" , options : .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
-                        copy = copy.replacingOccurrences(of: el!.group, with:"" , options : .regularExpression)
+                        copy = copy.replacingOccurrences(of: el.group, with:"" , options : .regularExpression)
                         
-                        el?.pairName = searchByRegularExpresion(regularEx: #"^\s+\w+"#, str: copy)[0].replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
+                        el.pairName = searchByRegularExpresion(regularEx: #"^\s+\w+"#, str: copy)[0].replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
-                        copy = copy.replacingOccurrences(of: el!.pairName, with:"" , options : .regularExpression)
+                        copy = copy.replacingOccurrences(of: el.pairName, with:"" , options : .regularExpression)
                         
-                        el?.teacher = copy.replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
+                        el.teacher = copy.replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
                         pairsArray.append(el)
                         
@@ -154,10 +154,10 @@ class RequestKBP {
             var pairNumberToPust = 1
             for (index, _) in RequestKBP.curriculum!.enumerated() {
                 
-                if RequestKBP.curriculum![index]!.pairName != "" {
+                if RequestKBP.curriculum![index].pairName != "" {
                     
                     pairNumberToPust = pairNumberToPust == 8 ? 1 : pairNumberToPust
-                    RequestKBP.curriculum![index]!.numberPare = String(pairNumberToPust)
+                    RequestKBP.curriculum![index].numberPare = String(pairNumberToPust)
                 }
                 pairNumberToPust += 1
             }

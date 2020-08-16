@@ -11,16 +11,16 @@
         <!--View Controller-->
         <scene sceneID="vnb-Jd-0i0">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OwD-TQ-F2g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="GGO-hH-t6U" customClass="ViewController" customModule="NewSchedule" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PYh-8B-wlD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="5FC-Cj-EEc"/>
                     </view>
                     <navigationItem key="navigationItem" id="XhI-wx-Pbs"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OwD-TQ-F2g" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="493" y="134"/>
         </scene>
@@ -30,7 +30,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7MD-pi-pvf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="fhA-Vf-q4y">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
