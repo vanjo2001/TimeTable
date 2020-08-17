@@ -25,32 +25,46 @@ class ViewController: UIViewController {
         multiScroll = MultiDirectionOrganizedScroll(countOfPages: 6,
                                                     withFrame: CGRect(x: view.center.x,
                                                                      y: view.center.y,
-                                                                     width: 100,
-                                                                     height: 100),
+                                                                     width: SizeEntity.kScreenWidth,
+                                                                     height: SizeEntity.kScreenHeight/2),
                                                     andStyle: .default)
         
         multiScroll.translatesAutoresizingMaskIntoConstraints = false
-        multiScroll.backgroundColor = .lightGray
+        multiScroll.backgroundColor = .white
+        multiScroll.isPageControlActive = true
         view.addSubview(multiScroll)
         
-//        let queue = DispatchQueue(label: "vanjo_gueue")
-//        queue.async {
-//            RequestKBP.getData(stringURL: "https://kbp.by/rasp/timetable/view_beta_kbp/?cat=group&id=31") { (data) in
-//                self.fullCurriculum = data
-//
-//                self.current = self.fullCurriculum?.currentWeek ?? CurriculumWeek()
-//                self.current = removeEmptyPares(arr: self.current)
-//
+        
+        let queue = DispatchQueue(label: "vanjo_gueue")
+        queue.async {
+            RequestKBP.getData(stringURL: "https://kbp.by/rasp/timetable/view_beta_kbp/?cat=group&id=31") { (data) in
+                self.fullCurriculum = data
+
+                self.current = self.fullCurriculum?.currentWeek ?? CurriculumWeek()
+                self.current = removeEmptyPares(arr: self.current)
+                print(self.current)
+
+                
+                self.multiScroll.data = self.current
+                self.multiScroll.reloadData()
 //                DispatchQueue.main.async {
-//                    self.collectionView.reloadData()
+//
 //                }
-//            }
-//        }
-//        
-//        var dictionary = getLinkDictionary()
-//        print(dictionary["Т-795"])
+                
+            }
+        }
+        
+        
+        var dictionary: [String: String] = [:]
+        
+        queue.async {
+            dictionary = getLinkDictionary()
+        }
+        
+        
         
     }
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

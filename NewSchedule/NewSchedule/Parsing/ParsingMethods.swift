@@ -25,14 +25,14 @@ func searchByRegularExpresion(regularEx: String, str: String) -> [String] {
     return arr
 }
 
-//func removeEmptyPares(arr: CurriculumWeek) -> CurriculumWeek {
-//    var copy = arr
-//    
-//    for (i, day) in copy.enumerated() {
-//        copy[i] = day.filter { (pare: (pairName: String, teacher: String, room: String, group: String, numberPare: String)?) -> Bool in
-//            
-//            return !(pare?.teacher == "")
-//        }
-//    }
-//    return copy
-//}
+func removeEmptyPares(arr: CurriculumWeek) -> CurriculumWeek {
+    var copy = arr
+    
+    for (i, day) in copy.enumerated() {
+        copy[i] = day.filter { (pare: CurriculumPare) -> Bool in
+            
+            return !(pare.teacher == "")
+        }
+    }
+    return copy
+}

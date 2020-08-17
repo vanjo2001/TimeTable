@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DoubleInsideCollectionViewCell: UICollectionViewCell {
+class ContentView: UIView {
     
     @IBOutlet weak var subject: UILabel!
     @IBOutlet weak var numberOfPare: UILabel!
@@ -19,10 +19,10 @@ class DoubleInsideCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        contentView.layer.cornerRadius = 20
-        contentView.layer.borderWidth = 1.0
-        contentView.layer.borderColor = UIColor.clear.cgColor
-        contentView.layer.masksToBounds = true
+        layer.cornerRadius = 20
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.clear.cgColor
+        layer.masksToBounds = true
 
 
         layer.shadowColor = UIColor.gray.cgColor
@@ -30,9 +30,20 @@ class DoubleInsideCollectionViewCell: UICollectionViewCell {
         layer.shadowRadius = 20
         layer.shadowOpacity = 0.3
         layer.masksToBounds = false
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
-        layer.backgroundColor = UIColor.clear.cgColor
+        
+//        layer.backgroundColor = UIColor.clear.cgColor
         
     }
+    
+    func loadViewFromNib() -> UIView {
+        let bundle = Bundle(for: type(of: self))
+        let nib = UINib(nibName: "ContentView", bundle: bundle)
+        let view = nib.instantiate(withOwner: self, options: nil)[0] as! UIView
+        view.frame = bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(view)
+        return view
+    }
+    
     
 }

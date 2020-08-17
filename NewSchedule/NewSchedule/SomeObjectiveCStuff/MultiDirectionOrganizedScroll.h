@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required
 - (NSInteger)countOfPages;
-- (NSArray<NSArray<CurriculumPare *> *> *)content;
 - (UIEdgeInsets)edge;
 
 @end
@@ -38,9 +37,12 @@ typedef NS_ENUM(NSInteger, MultiDirectionOrganizedScrollStyle) {
 
 @interface MultiDirectionOrganizedScroll : UIScrollView <UIScrollViewDelegate>
 
+@property (nonatomic, strong) NSArray<NSArray<CurriculumPare *> *> *data;
 @property (nonatomic, weak) id<MultiDirectionOrganizedScrollDelegate> multiDelegate;    // Delegate should be set in the viewDidLayoutSubviews or some method which include valid layout
 @property (nonatomic, assign, getter=isPageControlActive) BOOL pageControlActive;
 @property (nonatomic, strong) UIColor *color;
+
+- (void)reloadData;
 
 - (instancetype)initWithCountOfPages:(NSInteger)count withFrame:(CGRect)rect andStyle:(MultiDirectionOrganizedScrollStyle)style;
 
