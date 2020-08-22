@@ -37,15 +37,16 @@ class ViewController: UIViewController {
         
         let queue = DispatchQueue(label: "vanjo_gueue")
         queue.async {
-            RequestKBP.getData(stringURL: "https://kbp.by/rasp/timetable/view_beta_kbp/?cat=group&id=31") { (data) in
+            RequestKBP.getData(stringURL: "https://kbp.by/rasp/timetable/view_beta_kbp/?cat=group&id=50") { (data) in
                 self.fullCurriculum = data
 
                 self.current = self.fullCurriculum?.currentWeek ?? CurriculumWeek()
                 self.current = removeEmptyPares(arr: self.current)
-                print(self.current)
 
                 
                 self.multiScroll.data = self.current
+                
+                
                 self.multiScroll.reloadData()
 //                DispatchQueue.main.async {
 //

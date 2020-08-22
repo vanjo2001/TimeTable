@@ -46,8 +46,8 @@
             filePath = "NewSchedule/SomeObjectiveCStuff/ MultiDirectionOrganizedScroll.h.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "184"
+            endingLineNumber = "184"
             landmarkName = "-setupDataView"
             landmarkType = "7">
          </BreakpointContent>
@@ -56,6 +56,22 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0B23DEB2-DD11-41EC-9290-9D672E6842A1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewSchedule/SomeObjectiveCStuff/ MultiDirectionOrganizedScroll.h.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "-reloadData"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8FC03EFB-4FD0-4E72-B698-842C464F2ED2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -71,16 +87,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8FC03EFB-4FD0-4E72-B698-842C464F2ED2"
+            uuid = "030F2F0C-EF62-411C-ACFC-9EB936FE2A34"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "NewSchedule/SomeObjectiveCStuff/ MultiDirectionOrganizedScroll.h.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "246"
-            endingLineNumber = "246"
-            landmarkName = "-reloadData"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "-setupLoadMode"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

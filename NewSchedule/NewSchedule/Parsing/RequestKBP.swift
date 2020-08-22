@@ -216,7 +216,7 @@ class RequestKBP {
                 }
             
         }
-        return CR;
+        return CR
     }
     
     

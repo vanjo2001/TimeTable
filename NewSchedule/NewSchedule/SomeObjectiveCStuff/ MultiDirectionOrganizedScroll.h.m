@@ -93,10 +93,8 @@
 - (UIActivityIndicatorView *)indicator {
     if (!_indicator) {
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self->_indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            self->_indicator.center = CGPointMake(WIDTH/2, 200);
-        });
+        _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _indicator.center = CGPointMake(WIDTH/2, HEIGHT/2);
         
     }
     return _indicator;
@@ -123,6 +121,12 @@
 - (void)setupLoadMode {
     
     [self.superview addSubview:self.indicator];
+    
+//    UIView *ss = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+//    ss.backgroundColor = UIColor.blueColor;
+//
+//    [self.superview addSubview:ss];
+    
     [self.indicator startAnimating];
 }
 
@@ -258,16 +262,16 @@
                 pareView.teacher.text = pare.teacher;
                 pareView.time.text = @"10:30-12:20";
                 
-//                [UIView animateWithDuration:(j == 0 ? 1 : j) animations:^{
-//                    pareView.alpha = 1.0;
-//                }];
-                
             });
             
             j++;
         }
         i++;
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.indicator stopAnimating];
+    });
+    
 }
 
 
