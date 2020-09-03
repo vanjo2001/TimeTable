@@ -36,8 +36,17 @@ class ViewController: UIViewController {
         
         
         let queue = DispatchQueue(label: "vanjo_gueue")
+        
+        
+        var dictionary: [String: String] = [:]
+        
         queue.async {
-            RequestKBP.getData(stringURL: "https://kbp.by/rasp/timetable/view_beta_kbp/?cat=group&id=50") { (data) in
+            dictionary = getLinkDictionary()
+            print(dictionary)
+        }
+        
+        queue.async {
+            RequestKBP.getData(stringURL: dictionary["Т-75"] ?? "https://kbp.by/rasp/timetable/view_beta_kbp/?cat=group&id=42") { (data) in
                 self.fullCurriculum = data
 
                 self.current = self.fullCurriculum?.currentWeek ?? CurriculumWeek()
@@ -51,15 +60,7 @@ class ViewController: UIViewController {
 //                DispatchQueue.main.async {
 //
 //                }
-                
             }
-        }
-        
-        
-        var dictionary: [String: String] = [:]
-        
-        queue.async {
-            dictionary = getLinkDictionary()
         }
         
         

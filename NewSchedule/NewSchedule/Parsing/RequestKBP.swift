@@ -87,6 +87,7 @@ class RequestKBP {
             RequestKBP.pointsOfChanges = RequestKBP.getChangeOfPairSwitcher(htmlContext: htmlContext)
             htmlContext = searchByRegularExpresion(regularEx: #"<table\s+style=\"padding-top:10px;\">.+<\/table>"#, str: htmlContext ?? "")[0]
             
+            
             var dayCarricullum: [String] = []
             var pairsArray: [CurriculumPare] = []
             for weekNuber in 1...2 {
@@ -112,19 +113,21 @@ class RequestKBP {
                         
                         var copy = dayString
                         var el: CurriculumPare = CurriculumPare()
-                        el.room = copy.replacingOccurrences(of: #"^\s+\w+\d*\w*\s+(\s*\w+\s+.{2,5}){1,2}\s+\w-\d+\s+"#, with:"" , options : .regularExpression)
+                        el.room = copy.replacingOccurrences(of: #"^\s*.+\s*\w-\d+\s*"#, with:"" , options : .regularExpression)
                                        .replacingOccurrences(of: #"\s+"#, with:"" , options : .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
                         copy = copy.replacingOccurrences(of: el.room, with:"" , options : .regularExpression)
+                                   .replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
-                        el.group = copy.replacingOccurrences(of: #"^\s+\w+\d*\w*\s+(\s*\w+\s+.{2,5}){1,2}"#, with:"" , options : .regularExpression)
-                            .replacingOccurrences(of: #"\s+"#, with:"" , options : .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
+                        el.group = searchByRegularExpresion(regularEx: #"\w-\d+"#, str: copy)[0]
+                            .replacingOccurrences(of: #"\s+"#, with:"" , options : .regularExpression)
+                        
                         
                         copy = copy.replacingOccurrences(of: el.group, with:"" , options : .regularExpression)
                         
-                        el.pairName = searchByRegularExpresion(regularEx: #"^\s+\w+"#, str: copy)[0].replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
+                        el.pairName = searchByRegularExpresion(regularEx: #"^\s*\S+"#, str: copy)[0].replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
-                        copy = copy.replacingOccurrences(of: el.pairName, with:"" , options : .regularExpression)
+                        copy = copy.replacingOccurrences(of: #"^\s*\S+"#, with:"" , options : .regularExpression)
                         
                         el.teacher = copy.replacingOccurrences(of: #"\s{2,}"#, with: " ", options: .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         
@@ -153,12 +156,8 @@ class RequestKBP {
             
             var pairNumberToPust = 1
             for (index, _) in RequestKBP.curriculum!.enumerated() {
-                
-                if RequestKBP.curriculum![index].pairName != "" {
-                    
-                    pairNumberToPust = pairNumberToPust == 8 ? 1 : pairNumberToPust
-                    RequestKBP.curriculum![index].numberPare = String(pairNumberToPust)
-                }
+                pairNumberToPust = pairNumberToPust > 7 ? 1 : pairNumberToPust
+                RequestKBP.curriculum![index].numberPare = String(pairNumberToPust)
                 pairNumberToPust += 1
             }
             
@@ -216,7 +215,7 @@ class RequestKBP {
                 }
             
         }
-        return CR
+        return CR;
     }
     
     

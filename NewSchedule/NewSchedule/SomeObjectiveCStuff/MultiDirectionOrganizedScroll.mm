@@ -8,6 +8,9 @@
 
 #import "MultiDirectionOrganizedScroll.h"
 #import "NewSchedule-Swift.h"
+#import "MegaSuperDuper.mm"
+
+
 
 @interface MultiDirectionOrganizedScroll () {
     MultiDirectionOrganizedScrollStyle _style;
@@ -34,6 +37,8 @@
 - (instancetype)initWithCountOfPages:(NSInteger)count withFrame:(CGRect)rect andStyle:(MultiDirectionOrganizedScrollStyle)style {
     self = [super initWithFrame:rect];
     
+//    auto aa = new MegaSuperDuper;
+    
     if (self) {
         self.delegate = self;
         self.showsHorizontalScrollIndicator = NO;
@@ -55,6 +60,7 @@
 #define CONTENT_VIEW_SIDE_OFFSET 15
 #define CONTENT_VIEW_CORNER_RADIUS 25
 #define CONTENT_VIEW_TOP_CONSTRAINT 40
+#define CONTENT_VIEW_GAP 20
 
 #define PAGE_CONTROL_CONSTANT 20
 
@@ -182,105 +188,104 @@
 
 - (void)setupDataView {
     
+}
+
+- (void)reloadData {
+    
     NSInteger indexI = 0;
     
-    for (long i = 0; i < [self.multiDelegate countOfPages]; i++) {
+    for (NSArray *arr in self.data) {
 
+        NSInteger indexJ = 0;
+        
         UIScrollView *context = self.arrOfChildScrollViews[indexI];
 
         //Layout compute
-        CGPoint point = [self.arrOfFrameChildScrollViews[indexI] CGPointValue];
+        __block CGPoint point = [self.arrOfFrameChildScrollViews[indexI] CGPointValue];
 
         point.x += CONTENT_VIEW_SIDE_OFFSET;
         point.y = CONTENT_VIEW_TOP_CONSTRAINT;
-
+        
         NSMutableArray<ContentView *> *oneArr = [NSMutableArray new];
         
-        for (long j = 0; j < 4; j++) {
+        for (CurriculumPare *pare in arr) {
             
-            ContentView *realPareView = [[[NSBundle mainBundle] loadNibNamed:@"ContentView" owner:self options:nil] objectAtIndex:0];
+            __block ContentView *realPareView = NULL;
             
-            realPareView.alpha = 0.0;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                realPareView = [[[NSBundle mainBundle] loadNibNamed:@"ContentView" owner:self options:nil] objectAtIndex:0];
+                
+                realPareView.alpha = 0.0;
+                
+                realPareView.numberOfPare.text = pare.numberPare;
+                realPareView.numberOfRoom.text = pare.room;
+                realPareView.subject.text = pare.pairName;
+                realPareView.teacher.text = pare.teacher;
+                realPareView.time.text = @"11:40-12:50";
+                
+                CGRect fframe = realPareView.frame;
+                fframe.size.width = WIDTH-CONTENT_VIEW_SIDE_OFFSET * 2;
+                fframe.origin = point;
+                
+                realPareView.frame = fframe;
+                realPareView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:realPareView.bounds cornerRadius:realPareView.layer.cornerRadius].CGPath;
+                
+                [context addSubview:realPareView];
+                 
+                 [UIView animateWithDuration:(indexJ == 0 ? 1 : indexJ) animations:^{
+                     realPareView.alpha = 1.0;
+                 }];
+                
+                [oneArr addObject:realPareView];
+                
+                point.y += fframe.size.height + CONTENT_VIEW_GAP;
+                
+            });
             
-            realPareView.numberOfPare.text = @"";
-            realPareView.numberOfRoom.text = @"";
-            realPareView.subject.text = @"";
-            realPareView.teacher.text = @"";
-            realPareView.time.text = @"";
-            
-            
-            CGRect fframe = realPareView.frame;
-            fframe.size.width = WIDTH-CONTENT_VIEW_SIDE_OFFSET * 2;
-            fframe.origin = point;
-            
-            realPareView.frame = fframe;
-            realPareView.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:realPareView.bounds cornerRadius:realPareView.layer.cornerRadius].CGPath;
-            
-        //            realPareView.frame = CGRectMake(point.x,
-        //                                            point.y,
-        //                                            WIDTH-CONTENT_VIEW_SIDE_OFFSET * 2,
-        //                                            CONTENT_VIEW_HEIGHT);
-            
-            [context addSubview:realPareView];
-            
-            [UIView animateWithDuration:(j == 0 ? 1 : j) animations:^{
-                realPareView.alpha = 1.0;
-            }];
-            
-            [oneArr addObject:realPareView];
-            
-            point.y += fframe.size.height + 20;
+            indexJ++;
             
         }
 
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (point.y > context.bounds.size.height) {
+                context.contentSize = CGSizeMake(WIDTH, point.y);
+            }
+        });
 
-        if (point.y + CONTENT_VIEW_HEIGHT > context.bounds.size.height) {
-            context.contentSize = CGSizeMake(WIDTH, point.y);
-        }
+        
 
         [self.arrOfContentView addObject:oneArr];
         [self.arrOfFrameChildScrollViews insertObject:[NSValue valueWithCGPoint:point] atIndex:indexI];
 
         indexI++;
     }
-    
-}
 
-- (void)reloadData {
-    NSInteger i = 0;
-    for (NSArray *oneArr in self.data) {
-        NSInteger j = 0;
-        for (CurriculumPare *pare in oneArr) {
-            
-            ContentView *pareView = self.arrOfContentView[i][j];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                pareView.numberOfPare.text = pare.numberPare;
-                pareView.numberOfRoom.text = pare.room;
-                pareView.subject.text = pare.pairName;
-                pareView.teacher.text = pare.teacher;
-                pareView.time.text = @"10:30-12:20";
-                
-            });
-            
-            j++;
-        }
-        i++;
-    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.indicator stopAnimating];
     });
-    
+
 }
+    
 
 
 #pragma mark - Delegates
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSInteger page = round(scrollView.contentOffset.x / WIDTH);
+    
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    
+    NSInteger page = round(targetContentOffset->x / WIDTH);
     self.pageControl.currentPage = page;
 }
 
+- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
+    NSLog(@"hi");
+}
+
+
 @end
+
 

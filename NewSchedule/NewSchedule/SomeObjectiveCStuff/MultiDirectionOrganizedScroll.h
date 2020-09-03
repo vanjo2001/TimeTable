@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class CurriculumPare;
 
+
 @protocol MultiDirectionOrganizedScrollDelegate <NSObject>
 
 @required
