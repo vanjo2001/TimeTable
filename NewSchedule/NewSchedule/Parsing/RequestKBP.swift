@@ -112,7 +112,7 @@ class RequestKBP {
                     for dayString in dayCarricullum {
                         
                         var copy = dayString
-                        var el: CurriculumPare = CurriculumPare()
+                        let el: CurriculumPare = CurriculumPare()
                         el.room = copy.replacingOccurrences(of: #"^\s*.+\s*\w-\d+\s*"#, with:"" , options : .regularExpression)
                                        .replacingOccurrences(of: #"\s+"#, with:"" , options : .regularExpression).replacingOccurrences(of: #"\d\s*неделя"#, with:"" , options : .regularExpression)
                         

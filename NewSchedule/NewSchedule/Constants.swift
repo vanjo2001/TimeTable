@@ -27,11 +27,16 @@ struct SizeEntity {
     static let numOfPare: CGFloat = 38
     static let time: CGFloat = 18
     
+    static let wd: CGFloat = 32
+    
+    
     static let minRoom: CGFloat = SizeEntity.room/minConstant
     static let minSubject: CGFloat = SizeEntity.subject/minConstant
     static let minTeacher: CGFloat = SizeEntity.teacher/minConstant
     static let minNumOfPare: CGFloat = SizeEntity.numOfPare/minConstant
     static let minTime: CGFloat = SizeEntity.time/minConstant
+    
+    static let minWD: CGFloat = SizeEntity.wd/minConstant
     
     
     static let sizeForCell: CGFloat = 128
@@ -79,10 +84,14 @@ class CurriculumPare: NSObject {
 //Version for Objective C
 
 class SizeEntityObjC: NSObject {
+    
     private override init() {}
     
     @objc class func screenWidth() -> CGFloat { return SizeEntity.kScreenWidth }
     @objc class func screenHeight() -> CGFloat { return SizeEntity.kScreenHeight }
     @objc class func bottomConstraint() -> CGFloat { return SizeEntity.kBottomConstraint }
+    @objc class func wd() -> CGFloat { return SizeEntity.wd }
+    @objc class func minWD() -> CGFloat { return SizeEntity.minWD }
+    @objc class func coefFont() -> CGFloat { return SizeEntity.coefFont }
     
 }

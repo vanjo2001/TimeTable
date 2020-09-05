@@ -9,7 +9,13 @@
 import UIKit
 
 
-extension ViewController: MultiDirectionOrganizedScrollDelegate {
+extension ViewController: MultiDirectionOrganizedScrollDelegate, WeekControlDelegate {
+    
+    
+    func data(forDays weekControl: WeekControl) -> [String] {
+        return ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
+    }
+    
     
     
     

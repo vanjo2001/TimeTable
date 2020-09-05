@@ -15,13 +15,39 @@ class ViewController: UIViewController {
     
     var current: CurriculumWeek = [[CurriculumPare()]]
     var multiScroll: MultiDirectionOrganizedScroll!
+    var weekControl: WeekControl!
     
     var fullCurriculum: CurriculumBothWeeks?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+//        for family in UIFont.familyNames.sorted() {
+//            let names = UIFont.fontNames(forFamilyName: family)
+//            print("Family: \(family) Font names: \(names)")
+//        }
+        
+        setupMultiScroll()
+        
+        setupWeekControl()
+        
+        setupSyncLoad()
+        
+    }
+    
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        self.multiScroll.multiDelegate = self
+        
+        self.weekControl.weekDelegate = self
+        
+        setupLayout()
+    }
+    
+    
+    func setupMultiScroll() {
         multiScroll = MultiDirectionOrganizedScroll(countOfPages: 6,
                                                     withFrame: CGRect(x: view.center.x,
                                                                      y: view.center.y,
@@ -33,8 +59,16 @@ class ViewController: UIViewController {
         multiScroll.backgroundColor = .white
         multiScroll.isPageControlActive = true
         view.addSubview(multiScroll)
+    }
+    
+    func setupWeekControl() {
+        weekControl = WeekControl(frame: CGRect(x: 0, y: SizeEntity.kScreenHeight-SizeEntity.kBottomConstraint, width: SizeEntity.kScreenWidth, height: SizeEntity.kBottomConstraint))
+        weekControl.backgroundColor = UIColor(red: 240/255, green: 230/255, blue: 230/255, alpha: 1)
         
-        
+        view.addSubview(weekControl)
+    }
+    
+    func setupSyncLoad() {
         let queue = DispatchQueue(label: "vanjo_gueue")
         
         
@@ -62,18 +96,6 @@ class ViewController: UIViewController {
 //                }
             }
         }
-        
-        
-        
-    }
-    
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        self.multiScroll.multiDelegate = self
-        
-        setupLayout()
     }
     
     func setupLayout() {

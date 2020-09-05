@@ -10,7 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class WeekControl;
+
+
+@protocol WeekControlDelegate <NSObject>
+
+- (NSArray<NSString *> *)dataForDays:(WeekControl *)weekControl;
+
+@end
+
 @interface WeekControl : UIControl
+
+@property (nonatomic, weak) id<WeekControlDelegate> weekDelegate;
+@property (nonatomic, strong) UIColor *colorOfDays;
 
 @end
 
