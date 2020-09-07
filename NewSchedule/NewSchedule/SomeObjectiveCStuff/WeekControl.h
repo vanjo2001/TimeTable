@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol WeekControlDelegate <NSObject>
 
 - (NSArray<NSString *> *)dataForDays:(WeekControl *)weekControl;
+- (void)convenientPage:(UIButton *)sender;
 
 @end
 
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<WeekControlDelegate> weekDelegate;
 @property (nonatomic, strong) UIColor *colorOfDays;
+@property (nonatomic, assign) NSInteger currentDay;
 
 @end
 

@@ -17,7 +17,6 @@
 }
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) NSMutableArray<UIScrollView *> *arrOfChildScrollViews;
 @property (nonatomic, strong) NSMutableArray<NSValue *> *arrOfFrameChildScrollViews;
@@ -40,7 +39,6 @@
 //    auto aa = new MegaSuperDuper;
     
     if (self) {
-        self.delegate = self;
         self.showsHorizontalScrollIndicator = NO;
         self.pagingEnabled = YES;
         _style = style;
@@ -71,11 +69,17 @@
         _multiDelegate = multiDelegate;
         
         [self setupMultiScroll];
-        [self setupDataView];
         [self setupLoadMode];
         if (self.isPageControlActive) {
             [self setupPageControl];
         }
+    }
+}
+
+- (void)setData:(NSArray<NSArray<CurriculumPare *> *> *)data {
+    if (_data != data) {
+        _data = data;
+        [self reloadData];
     }
 }
 
@@ -122,17 +126,17 @@
 }
 
 
+
 #pragma mark - Setup Methods
+
+- (void)goToPageOfScrollView:(NSInteger)page {
+    [self setContentOffset:CGPointMake(WIDTH * page, 0) animated:YES];
+}
+
 
 - (void)setupLoadMode {
     
     [self.superview addSubview:self.indicator];
-    
-//    UIView *ss = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-//    ss.backgroundColor = UIColor.blueColor;
-//
-//    [self.superview addSubview:ss];
-    
     [self.indicator startAnimating];
 }
 
@@ -153,7 +157,7 @@
                                                                               WIDTH,
                                                                               HEIGHT - BOTTOM_CONSTRAINT - self.edgeInsets.top - (_style ? PAGE_CONTROL_CONSTANT : 0))];
         
-        scroll.backgroundColor = UIColor.whiteColor;
+        scroll.backgroundColor = [UIColor colorNamed:@"BackgroundColor"];
 //        [UIColor colorWithDisplayP3Red:0.01 green:0.1 * i blue:1 alpha:1]
 //        scroll.contentSize = CGSizeMake(WIDTH, HEIGHT);
         
@@ -185,12 +189,20 @@
     self.pageControl = nil;
 }
 
-
-- (void)setupDataView {
+- (void)prepateForReload {
     
+    for (NSMutableArray<ContentView *> *arrOfView in self.arrOfContentView) {
+        for (ContentView *oneView in arrOfView) {
+            [oneView removeFromSuperview];
+        }
+    }
+    
+    [self.arrOfContentView removeAllObjects];
 }
 
 - (void)reloadData {
+    
+    [self prepateForReload];
     
     NSInteger indexI = 0;
     
@@ -215,6 +227,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 realPareView = [[[NSBundle mainBundle] loadNibNamed:@"ContentView" owner:self options:nil] objectAtIndex:0];
+                realPareView.backgroundColor = [UIColor colorNamed:@"ContentViewColor"];
                 
                 realPareView.alpha = 0.0;
                 
@@ -265,24 +278,6 @@
         [self.indicator stopAnimating];
     });
 
-}
-    
-
-
-#pragma mark - Delegates
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
-}
-
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    
-    NSInteger page = round(targetContentOffset->x / WIDTH);
-    self.pageControl.currentPage = page;
-}
-
-- (void)scrollViewDidChangeAdjustedContentInset:(UIScrollView *)scrollView {
-    NSLog(@"hi");
 }
 
 

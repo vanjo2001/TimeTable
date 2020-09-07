@@ -36,16 +36,19 @@ typedef NS_ENUM(NSInteger, MultiDirectionOrganizedScrollStyle) {
 
 /****************    Multi Direction Organized Scroll        ****************/
 
-@interface MultiDirectionOrganizedScroll : UIScrollView <UIScrollViewDelegate>
+@interface MultiDirectionOrganizedScroll : UIScrollView
 
 @property (nonatomic, strong) NSArray<NSArray<CurriculumPare *> *> *data;
 @property (nonatomic, weak) id<MultiDirectionOrganizedScrollDelegate> multiDelegate;    // Delegate should be set in the viewDidLayoutSubviews or some method which include valid layout
 @property (nonatomic, assign, getter=isPageControlActive) BOOL pageControlActive;
 @property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) UIPageControl *pageControl;
 
 - (void)reloadData;
+- (void)goToPageOfScrollView:(NSInteger)page;
 
 - (instancetype)initWithCountOfPages:(NSInteger)count withFrame:(CGRect)rect andStyle:(MultiDirectionOrganizedScrollStyle)style;
+
 
 @end
 

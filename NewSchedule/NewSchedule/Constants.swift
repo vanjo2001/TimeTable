@@ -19,7 +19,7 @@ struct SizeEntity {
     
     static let kBottomConstraint = SizeEntity.kScreenHeight / 9
     
-    private static let minConstant: CGFloat = 1.3
+    private static let minConstant: CGFloat = 1.15
     
     static let room: CGFloat = 38
     static let subject: CGFloat = 22

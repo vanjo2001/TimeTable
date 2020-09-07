@@ -25,7 +25,8 @@ class ContentView: UIView {
         layer.masksToBounds = true
 
 
-        layer.shadowColor = UIColor.gray.cgColor
+        
+        layer.shadowColor = UIColor(named: "ShadowyColor")?.cgColor
         layer.shadowOffset = CGSize(width: 0.3, height: 0.3)
         layer.shadowRadius = 20
         layer.shadowOpacity = 0.3
@@ -69,6 +70,13 @@ class ContentView: UIView {
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(view)
         return view
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        layer.shadowColor = UIColor(named: "ShadowyColor")?.cgColor
+        
     }
     
     
